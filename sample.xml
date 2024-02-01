@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nyt="http://www.nytimes.com/namespaces/rss/2.0" version="2.0">
+    <channel>
+        <title>NYT > Science > Space & Cosmos</title>
+        <link>https://www.nytimes.com/section/science/space</link>
+        <atom:link href="https://rss.nytimes.com/services/xml/rss/nyt/Space.xml" rel="self" type="application/rss+xml"/>
+        <description/>
+        <language>en-us</language>
+        <copyright>Copyright 2024 The New York Times Company</copyright>
+        <lastBuildDate>Mon, 29 Jan 2024 13:10:20 +0000</lastBuildDate>
+        <pubDate>Mon, 29 Jan 2024 02:01:49 +0000</pubDate>
+        <image>
+            <title>NYT > Science > Space & Cosmos</title>
+            <url>https://static01.nyt.com/images/misc/NYT_logo_rss_250x40.png</url>
+            <link>https://www.nytimes.com/section/science/space</link>
+        </image>
+        <item>
+            <title>Dark Galaxies: What Happens When Stars Are Nearly Invisible</title>
+            <link>https://www.nytimes.com/2024/01/26/science/space/dark-galaxy-stars.html</link>
+            <guid isPermaLink="true">https://www.nytimes.com/2024/01/26/science/space/dark-galaxy-stars.html</guid>
+            <atom:link href="https://www.nytimes.com/2024/01/26/science/space/dark-galaxy-stars.html" rel="standout"/>
+            <description>To dark matter and dark energy, add dark galaxies — collections of stars so sparse and faint
+                that
+                they
+                are all but invisible.
+            </description>
+            <dc:creator>Dennis Overbye</dc:creator>
+            <pubDate>Fri, 26 Jan 2024 19:53:33 +0000</pubDate>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Space and Astronomy</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Stars and Galaxies</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Dark Matter (Astronomy)</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Montes, Mireia</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">ONeil, Karen</category>
+            <category domain="">J0613+52</category>
+            <category domain="">Nube</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org">American Astronomical Society
+            </category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org">Astronomy and Astrophysics (Journal)
+            </category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">your-feed-science</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Physics</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Gravitation and Gravity</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Canary Islands</category>
+            <media:content height="1801" medium="image"
+                           url="https://static01.nyt.com/images/2024/01/30/science/00SCI-DARKGALAXIES/00SCI-DARKGALAXIES-mediumSquareAt3X.jpg"
+                           width="1800"/>
+            <media:credit>P. Vosteen/Green Bnk Observatory/NSF/STScI</media:credit>
+            <media:description>An artist’s depiction of hydrogen gas observed in the galaxy J0613+52, with the colors
+                indicating
+                the likely rotation of the gas relative to the observer, red indicating motion away, blue indicating
+                motion
+                toward.
+            </media:description>
+        </item>
+    </channel>
+</rss>

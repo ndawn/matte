@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    image: matte/matte
+    container_name: matte/matte:bot
+    command: "alembic upgrade head && python -m run ${CONFIG_PATH}"
+    environment:
+      - MIGRATIONS_URL
+    volumes:
+      - ${PWD}/${CONFIG_PATH}:/app/${CONFIG_PATH}
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  poll:
+    build: .
+    image: matte/matte
+    container_name: matte/matte:poll
+    command: python -m poll ${CONFIG_PATH}
+    environment:
+      - MIGRATIONS_URL
+    volumes:
+      - ${PWD}/${CONFIG_PATH}:/app/${CONFIG_PATH}
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres
+    container_name: matte/matte:db
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - ${PWD}/db:/var/lib/postgresql/data
+    restart: unless-stopped

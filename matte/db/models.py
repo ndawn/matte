@@ -6,6 +6,7 @@ from sqlalchemy import func
 from sqlalchemy import BigInteger
 from sqlalchemy import ForeignKey
 from sqlalchemy import UniqueConstraint
+from sqlalchemy import UUID
 from sqlalchemy.dialects.postgresql.json import JSON
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
@@ -64,3 +65,10 @@ class Source(Model):
 
     def bump(self, timestamp: datetime | None = None) -> None:
         self.last_updated = timestamp or datetime.now(timezone.utc)  # type: ignore
+
+
+class PostUrl(Model):
+    __tablename__ = "urls"
+
+    id: Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    url: Mapped[str] = mapped_column(nullable=False)

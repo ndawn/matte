@@ -1,0 +1,15 @@
+db_url = ""
+db_echo = true
+bot_token = ""
+openai_api_key = ""
+poll_interval = 300
+sample_post_path = "sample.xml"
+summarization_enabled = true
+summarization_model = ""
+summarization_prompt = ""
+
+[default_user_settings]
+feed_name = true
+post_name = true
+post_link_in_post_name = false
+show_preview = true

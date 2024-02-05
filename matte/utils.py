@@ -1,6 +1,3 @@
-import zlib
-from base64 import b64decode
-from base64 import b64encode
 from dataclasses import dataclass
 from dataclasses import field
 from datetime import datetime
@@ -19,7 +16,7 @@ class UserSettings:
     show_preview: bool = field(metadata={"description": "Show page preview"})
 
 
-class SummarizePost(CallbackData, prefix="s"):
+class SummarizePost(CallbackData, prefix="s", sep="|"):
     link: str
 
 
@@ -28,17 +25,9 @@ class SettingsUpdate(CallbackData, prefix="settings_update"):
 
 
 async def get_feed(url: str) -> feedparser.FeedParserDict:
-    async with ClientSession() as session:
+    async with ClientSession(trust_env=True) as session:
         async with session.get(url) as response:
             return feedparser.parse(await response.text(), response_headers=response.headers)
-
-
-def compress_link(url: str) -> str:
-    return b64encode(zlib.compress(url.encode("utf-8"))).decode("utf-8")
-
-
-def decompress_link(url: str) -> str:
-    return b64decode(zlib.decompress(url.encode("utf-8"))).decode("utf-8")
 
 
 def get_publication_date(entry: feedparser.FeedParserDict) -> datetime | None:

@@ -6,8 +6,8 @@ from contextlib import suppress
 import feedparser
 from aiogram import Bot
 from aiogram.enums import ParseMode
-from dramatiq.brokers.redis import RedisBroker
 from loguru import logger
+from openai import AsyncOpenAI
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from matte.dispatcher import dispatcher
@@ -32,7 +32,7 @@ async def main() -> None:
     dispatcher.update.outer_middleware(context_middleware)
 
     dispatcher.workflow_data["config"] = config
-    dispatcher.workflow_data["broker"] = RedisBroker(url=config.redis_url)
+    dispatcher.workflow_data["openai"] = AsyncOpenAI(api_key=config.openai_api_key)
 
     with open("sample.xml") as sample_post_file:
         dispatcher.workflow_data["sample_post"] = feedparser.parse(sample_post_file.read())

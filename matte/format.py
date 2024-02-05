@@ -8,6 +8,7 @@ from feedparser import FeedParserDict
 from matte.db.models import Source
 from matte.db.models import User
 from matte.utils import SettingsUpdate
+from matte.utils import SummarizePost
 from matte.utils import UserSettings
 
 
@@ -38,6 +39,14 @@ class TextBuilder:
     @property
     def invalid_feed(self) -> str:
         return "Target resource is not a valid feed"
+
+    @property
+    def unable_to_get_feed(self) -> str:
+        return "I'm currently unable to get a feed from this source, please try again later"
+
+    @property
+    def summarization_unavailable(self) -> str:
+        return "Summarization is unavailable for this post"
 
     def subscribed(self, feed: FeedParserDict) -> str:
         return (
@@ -93,6 +102,14 @@ class TextBuilder:
             result += html.link(entry.link, entry.link)
 
         return result.rstrip()
+
+    def post_summary_markup(self, url: str) -> InlineKeyboardMarkup:
+        keyboard = InlineKeyboardBuilder()
+        keyboard.button(text="Summarize post", callback_data=SummarizePost(link=url).pack())
+        return keyboard.as_markup()
+
+    def add_summary(self, text: str, summary: str) -> str:
+        return f"{text}\n\nSummary:\n{summary}"
 
     def source_list(self, sources: list[Source]) -> str:
         if not sources:

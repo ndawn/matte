@@ -6,6 +6,8 @@ from datetime import datetime
 import feedparser
 from aiogram import Bot
 from aiogram.enums import ParseMode
+from aiogram.exceptions import TelegramRetryAfter
+from aiogram.utils.keyboard import InlineKeyboardMarkup
 from contextlib import suppress
 from loguru import logger
 from sqlalchemy.ext.asyncio import async_sessionmaker
@@ -25,6 +27,13 @@ class FeedPoller:
         self.session_class = async_sessionmaker(db_engine)
         self.text = text
         self.config = config
+
+    async def send_with_retry(self, chat_id: int, text: str, reply_markup: InlineKeyboardMarkup | None) -> None:
+        try:
+            await self.bot.send_message(chat_id=chat_id, text=text, reply_markup=reply_markup)
+        except TelegramRetryAfter as exception:
+            await asyncio.sleep(exception.retry_after)
+            await self.send_with_retry(chat_id, text, reply_markup)
 
     async def poll(self) -> None:
         while True:
@@ -74,9 +83,18 @@ class FeedPoller:
 
                     for user_id, updates in per_user_updates.items():
                         for update in sorted(updates, key=lambda update_: get_publication_date(update_[1])):
-                            await self.bot.send_message(
+                            url_id = None
+
+                            if self.config.summarization_enabled:
+                                url_id = await service.create_url(update[1].link)
+
+                            await self.send_with_retry(
                                 chat_id=user_map[user_id].chat_id,
                                 text=self.text.post(entry=update[1], feed_name=update[0].title, user=user_map[user_id]),
+                                reply_markup=(
+                                    text_builder.post_summary_markup(url_id)
+                                    if url_id is not None else None
+                                ),
                             )
 
                     await session.commit()

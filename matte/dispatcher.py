@@ -6,12 +6,16 @@ from aiogram.filters import CommandStart
 from aiogram.types import CallbackQuery
 from aiogram.types import Message
 from loguru import logger
+from openai import AsyncOpenAI
+from sqlalchemy.exc import NoResultFound
 
+from matte.config import Config
 from matte.db.models import User
 from matte.db.service import DatabaseService
 from matte.format import TextBuilder
 from matte.utils import get_feed
 from matte.utils import SettingsUpdate
+from matte.utils import SummarizePost
 
 
 dispatcher = Dispatcher()
@@ -52,6 +56,41 @@ async def update_settings(
     await query.message.answer(text.settings_list, reply_markup=text.settings_markup(user.settings))
 
 
+@dispatcher.callback_query(SummarizePost.filter())
+async def summarize_post(
+    query: CallbackQuery,
+    callback_data: SummarizePost,
+    text: TextBuilder,
+    openai: AsyncOpenAI,
+    db: DatabaseService,
+    config: Config,
+) -> None:
+    try:
+        url = await db.get_url(callback_data.link)
+    except NoResultFound as exception:
+        logger.debug(exception)
+        await query.message.edit_reply_markup(reply_markup=None)
+        await query.answer(text.summarization_unavailable, show_alert=True)
+        return
+
+    logger.info("Sending summarization request to OpenAI")
+
+    reply = await openai.chat.completions.create(
+        messages=[
+            {"role": "system", "content": config.summarization_prompt},
+            {"role": "user", "content": url},
+        ],
+        model=config.summarization_model,
+    )
+
+    summary = reply.choices[0].message.content
+
+    logger.info(f"Received {len(summary)}-characters-long reply from OpenAI")
+
+    await query.message.edit_text(text.add_summary(query.message.text, summary), reply_markup=None)
+    await db.delete_url(callback_data.link)
+
+
 @dispatcher.message()
 async def process_source_link(
     message: Message,
@@ -69,7 +108,12 @@ async def process_source_link(
         await message.answer(text.invalid_url)
         return
 
-    feed = await get_feed(message.text)
+    try:
+        feed = await get_feed(message.text)
+    except Exception as exception:
+        logger.exception(exception)
+        await message.answer(text.unable_to_get_feed)
+        return
 
     try:
         source = await db.get_user_source_by_link(user, message.text)

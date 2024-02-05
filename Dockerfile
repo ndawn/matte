@@ -10,11 +10,11 @@ COPY ./poetry.lock .
 
 RUN poetry install
 
-COPY ./matte .
-COPY ./migrations .
+COPY ./matte ./matte
+COPY ./migrations ./migrations
 COPY ./alembic.ini .
 COPY ./poll.py .
 COPY ./run.py .
 COPY ./sample.xml .
 
-ENTRYPOINT ["/bin/bash"]
+CMD ls -al && /bin/bash

@@ -4,8 +4,8 @@ services:
   bot:
     build: .
     image: matte/matte
-    container_name: matte/matte:bot
-    command: "alembic upgrade head && python -m run ${CONFIG_PATH}"
+    container_name: matte_bot
+    command: /bin/bash -c "alembic upgrade head && python -m run ${CONFIG_PATH}"
     environment:
       - MIGRATIONS_URL
     volumes:
@@ -17,7 +17,7 @@ services:
   poll:
     build: .
     image: matte/matte
-    container_name: matte/matte:poll
+    container_name: matte_poll
     command: python -m poll ${CONFIG_PATH}
     environment:
       - MIGRATIONS_URL
@@ -29,7 +29,7 @@ services:
 
   db:
     image: postgres
-    container_name: matte/matte:db
+    container_name: matte_db
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD

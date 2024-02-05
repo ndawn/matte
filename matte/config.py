@@ -10,11 +10,14 @@ from matte.utils import UserSettings
 class Config:
     db_url: str
     db_echo: bool
-    redis_url: str
     bot_token: str
+    openai_api_key: str
     poll_interval: int
     sample_post_path: str
     default_user_settings: UserSettings
+    summarization_enabled: bool
+    summarization_model: str
+    summarization_prompt: str
 
     @classmethod
     def load(cls, path: str | os.PathLike) -> Self:

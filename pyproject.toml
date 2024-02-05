@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matte"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = ["Maksim Burmistrov <drummerbmd@gmail.com>"]
 readme = "README.md"
@@ -11,14 +11,10 @@ aiogram = "^3.3.0"
 sqlalchemy = "^2.0.25"
 alembic = "^1.13.1"
 asyncpg = "^0.29.0"
-psycopg2 = "^2.9.9"
 loguru = "^0.7.2"
 feedparser = "^6.0.11"
-dramatiq = {extras = ["redis"], version = "^1.16.0"}
-transformers = {extras = ["torch"], version = "^4.37.2"}
-unstructured = "^0.12.3"
-langchain = "^0.1.4"
-huggingface-hub = "^0.20.3"
+psycopg2-binary = "^2.9.9"
+openai = "^1.11.1"
 
 
 [build-system]

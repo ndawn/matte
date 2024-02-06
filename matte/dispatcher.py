@@ -29,7 +29,7 @@ dispatcher = Dispatcher()
 
 @dispatcher.message(CommandStart())
 async def on_start_command(message: Message, text: TextBuilder) -> None:
-    await message.answer(text.welcome)
+    await message.answer(text.select_language, reply_markup=text.language_list_markup)
 
 
 @dispatcher.message(Command("list"))

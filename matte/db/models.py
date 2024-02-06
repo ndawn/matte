@@ -28,7 +28,7 @@ class User(Model):
     id: Mapped[int] = mapped_column(BigInteger(), primary_key=True, autoincrement=False)
     chat_id: Mapped[int] = mapped_column(BigInteger(), nullable=False)
     is_admin: Mapped[bool] = mapped_column(init=False, default=False)
-    language: Mapped[str] = mapped_column(init=False, nullable=False)
+    language: Mapped[str] = mapped_column(nullable=False)
     settings: Mapped[dict[str, bool]] = mapped_column(JSON, nullable=False)
     sources: Mapped[list["Source"]] = relationship(back_populates="user", lazy="joined")
 

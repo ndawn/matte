@@ -22,10 +22,9 @@ from matte.utils import get_publication_date
 
 
 class FeedPoller:
-    def __init__(self, bot: Bot, db_engine: AsyncEngine, text: TextBuilder, config: Config) -> None:
+    def __init__(self, bot: Bot, db_engine: AsyncEngine, config: Config) -> None:
         self.bot = bot
         self.session_class = async_sessionmaker(db_engine)
-        self.text = text
         self.config = config
 
     async def send_with_retry(self, chat_id: int, text: str, reply_markup: InlineKeyboardMarkup | None) -> None:
@@ -82,6 +81,8 @@ class FeedPoller:
                                 source.last_updated = get_publication_date(new_updates[0])
 
                     for user_id, updates in per_user_updates.items():
+                        text = TextBuilder(sample_post=sample_post, user=user_map[user_id])
+
                         for update in sorted(updates, key=lambda update_: get_publication_date(update_[1])):
                             url_id = None
 
@@ -90,9 +91,9 @@ class FeedPoller:
 
                             await self.send_with_retry(
                                 chat_id=user_map[user_id].chat_id,
-                                text=self.text.post(entry=update[1], feed_name=update[0].title, user=user_map[user_id]),
+                                text=text.post(entry=update[1], feed_name=update[0].title),
                                 reply_markup=(
-                                    text_builder.post_summary_markup(url_id)
+                                    text.post_summary_markup(url_id)
                                     if url_id is not None else None
                                 ),
                             )
@@ -120,9 +121,7 @@ if __name__ == "__main__":
 
     bot_instance = Bot(app_config.bot_token, parse_mode=ParseMode.HTML)
     engine = create_async_engine(app_config.db_url, echo=app_config.db_echo)
-    text_builder = TextBuilder(sample_post)
-
-    poller = FeedPoller(bot_instance, engine, text_builder, app_config)
+    poller = FeedPoller(bot_instance, engine, app_config)
 
     with suppress(asyncio.CancelledError):
         asyncio.run(poller.poll())

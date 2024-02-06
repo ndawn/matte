@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from dataclasses import field
 from datetime import datetime
 from time import mktime
 
@@ -10,14 +9,18 @@ from aiohttp.client import ClientSession
 
 @dataclass
 class UserSettings:
-    feed_name: bool = field(metadata={"description": "Display a feed title"})
-    post_name: bool = field(metadata={"description": "Display a post title"})
-    post_link_in_post_name: bool = field(metadata={"description": "Embed a post link into post name"})
-    show_preview: bool = field(metadata={"description": "Show page preview"})
+    feed_name: bool
+    post_name: bool
+    post_link_in_post_name: bool
+    show_preview: bool
 
 
 class SummarizePost(CallbackData, prefix="s", sep="|"):
     link: str
+
+
+class SelectLanguage(CallbackData, prefix="lang"):
+    language: str
 
 
 class SettingsUpdate(CallbackData, prefix="settings_update"):

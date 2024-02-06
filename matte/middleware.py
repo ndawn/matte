@@ -33,7 +33,7 @@ class ContextMiddleware(BaseMiddleware):
                 chat_id = event.message.chat.id
 
             data["user"] = await data["db"].get_or_create_user(user_id, chat_id)
-            data["text"] = TextBuilder(sample_post=data["sample_post"])
+            data["text"] = TextBuilder(sample_post=data["sample_post"], user=data["user"])
 
             try:
                 result = await handler(event, data)

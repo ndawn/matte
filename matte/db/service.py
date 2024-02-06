@@ -26,6 +26,7 @@ class DatabaseService:
         user = User(
             id=user_id,
             chat_id=chat_id,
+            language=self.config.default_language,
             settings={field: value for field, value in asdict(self.config.default_user_settings).items()},
             sources=[],
         )

@@ -8,6 +8,8 @@ summarization_enabled = true
 summarization_model = ""
 summarization_prompt = ""
 
+default_language = "en"
+
 [default_user_settings]
 feed_name = true
 post_name = true

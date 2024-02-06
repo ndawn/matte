@@ -29,7 +29,7 @@ dispatcher = Dispatcher()
 
 @dispatcher.message(CommandStart())
 async def on_start_command(message: Message, text: TextBuilder) -> None:
-    await message.answer(text.select_language, reply_markup=text.language_list_markup)
+    await message.answer(text.select_language, reply_markup=text.language_list_markup(go_back=False))
 
 
 @dispatcher.message(Command("list"))
@@ -72,7 +72,7 @@ async def update_settings(
     text: TextBuilder,
 ) -> None:
     if callback_data.field_name == "language":
-        await query.message.edit_text(text.select_language_prompt, reply_markup=text.language_list_markup)
+        await query.message.edit_text(text.select_language_prompt, reply_markup=text.language_list_markup())
         return
 
     new_value = user.toggle_setting(callback_data.field_name)

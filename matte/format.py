@@ -124,8 +124,7 @@ class TextBuilder:
         )
         return keyboard.as_markup()
 
-    @property
-    def language_list_markup(self) -> InlineKeyboardMarkup:
+    def language_list_markup(self, go_back: bool = True) -> InlineKeyboardMarkup:
         keyboard = InlineKeyboardBuilder()
 
         for language, display_name in languages.items():
@@ -134,10 +133,11 @@ class TextBuilder:
                 callback_data=SelectLanguage(language=language).pack(),
             )
 
-        keyboard.button(
-            text=translations[self.user.language]["go_back"],
-            callback_data=SelectLanguage(language="go_back").pack(),
-        )
+        if go_back:
+            keyboard.button(
+                text=translations[self.user.language]["go_back"],
+                callback_data=SelectLanguage(language="go_back").pack(),
+            )
 
         keyboard.adjust(2)
         return keyboard.as_markup()

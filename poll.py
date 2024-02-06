@@ -81,22 +81,26 @@ class FeedPoller:
                                 source.last_updated = get_publication_date(new_updates[0])
 
                     for user_id, updates in per_user_updates.items():
-                        text = TextBuilder(sample_post=sample_post, user=user_map[user_id])
+                        try:
+                            text = TextBuilder(sample_post=sample_post, user=user_map[user_id])
 
-                        for update in sorted(updates, key=lambda update_: get_publication_date(update_[1])):
-                            url_id = None
+                            for update in sorted(updates, key=lambda update_: get_publication_date(update_[1])):
+                                url_id = None
 
-                            if self.config.summarization_enabled:
-                                url_id = await service.create_url(update[1].link)
+                                if self.config.summarization_enabled:
+                                    url_id = await service.create_url(update[1].link)
 
-                            await self.send_with_retry(
-                                chat_id=user_map[user_id].chat_id,
-                                text=text.post(entry=update[1], feed_name=update[0].title),
-                                reply_markup=(
-                                    text.post_summary_markup(url_id)
-                                    if url_id is not None else None
-                                ),
-                            )
+                                await self.send_with_retry(
+                                    chat_id=user_map[user_id].chat_id,
+                                    text=text.post(entry=update[1], feed_name=update[0].title),
+                                    reply_markup=(
+                                        text.post_summary_markup(url_id)
+                                        if url_id is not None else None
+                                    ),
+                                )
+                        except Exception as exception:
+                            logger.error("Encountered an exception while processing update")
+                            logger.exception(exception)
 
                     await session.commit()
                 except Exception as exception:

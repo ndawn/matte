@@ -30,7 +30,18 @@ class SettingsUpdate(CallbackData, prefix="settings_update"):
 async def get_feed(url: str) -> feedparser.FeedParserDict:
     async with ClientSession(trust_env=True) as session:
         async with session.get(url) as response:
-            return feedparser.parse(await response.text(), response_headers=response.headers)
+            if response.content_length is not None and response.content_length > 1_000_000:  # yay, magic numbers
+                raise RuntimeError("Content length is too big")
+
+            text = b""
+
+            while not response.content.is_eof():
+                text += await response.content.read(4096)
+
+                if len(text) > 1_000_000:
+                    raise RuntimeError("Content length is too big")
+
+            return feedparser.parse(text.decode("utf-8"), response_headers=response.headers)
 
 
 def get_publication_date(entry: feedparser.FeedParserDict) -> datetime | None:

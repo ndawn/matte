@@ -131,7 +131,7 @@ async def summarize_post(
 
     logger.info(f"Received {len(summary)}-characters-long reply from OpenAI")
 
-    await query.message.edit_text(text.add_summary(query.message.text, summary), reply_markup=None)
+    await query.message.edit_text(text.add_summary(query.message.html_text, summary), reply_markup=None)
     await db.delete_url(callback_data.link)
 
 

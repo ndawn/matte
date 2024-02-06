@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matte"
-version = "1.0.3"
+version = "1.0.4"
 description = ""
 authors = ["Maksim Burmistrov <drummerbmd@gmail.com>"]
 readme = "README.md"

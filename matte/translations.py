@@ -2,12 +2,14 @@ languages = {
     "en": "🇬🇧 English",
     "ru": "🇷🇺 Русский",
     "sr": "🇷🇸 Srpski",
+    "geo": "🇬🇪 ქართული",
 }
 
 prompt_languages = {
     "en": "English",
     "ru": "Russian",
     "sr": "Serbian latin",
+    "geo": "Georgian",
 }
 
 commands = {
@@ -15,11 +17,13 @@ commands = {
         "en": "Show all your subscriptions",
         "ru": "Показать все ваши подписки",
         "sr": "Prikaži sve vaše pretplate",
+        "geo": "ყველა გამოწერილის ჩვენება",
     },
     "settings": {
         "en": "Change post appearance or change language",
         "ru": "Изменить внешний вид постов или изменить язык",
         "sr": "Promeniti izgled postova ili promeniti jezik",
+        "geo": "პოსტის გამოსახულების ან ენის შეცვლა",
     },
 }
 
@@ -135,5 +139,41 @@ translations = {
         "unsubscribe_prompt": "Pošaljite link ponovo da se odjavite sa feeda.",
         "setting_enabled": "Uključeno",
         "setting_disabled": "Isključeno",
+    },
+    "geo": {
+        "go_back": "უკან დაბრუნება",
+        "select_language": "ენის არჩევა",
+        "select_language_prompt": "აირჩიეთ ენა",
+        "welcome": (
+            "🔘 მოგესალმებათ Matte!\n\n"
+            "მომაწოდეთ ნებისმიერი RSS ფიდის ბმული. "
+            "უბრალოდ გამომიგზავნეთ ბმულის შემცველი მესიჯი (სათითაოდ)."
+        ),
+        "invalid_url": "გთხოვთ, გამომიგზავნეთ RSS ფიდის ვალიდური ბმული",
+        "invalid_feed": "აღნიშნული არ შეესაბამება ვალიდურ ფიდს",
+        "unable_to_get_feed": "ამ მომენტში არ შემიძლია აღნიშნული ბმულიდან ფიდის მიღება, მოგვიანებით სცადეთ",
+        "summarization_unavailable": "აღნიშნული პოსტის შეჯამება შეუძლებელია",
+        "subscribed": "წარმატებით გამოიწერა",
+        "unsubscribed": "ფიდის გამოწერა გაუქმდა წარმატებით!",
+        "last_update": "აღნიშნული ფიდის ბოლო განახლება:",
+        "no_last_update": (
+            "აღნიშნული ფიდი ბოლოს დროს არ განახლებულა, მაგრამ როგორც კი განახლდება, გამოგიგზავნით!"
+        ),
+        "settings_list": "პარამეტრების სია:",
+        "sample_post_preview": "პოსტები ასე გამოჩნდება:",
+
+        "settings": {
+            "feed_name": "ფიდის სახელის ჩვენება",
+            "post_name": "პოსტის სათაურის ჩვენება",
+            "post_link_in_post_name": "დაურთე ბმული პოსტის სათაურს",
+            "show_preview": "გვერდის წინასწარი ვერსიის ჩვენება",
+        },
+        "summarize_post": "პოსტის შეჯამება",
+        "summary": "შინაარსი",
+        "no_subscriptions": "თქვენ ამ მომენტში არაფერი გაქვთ გამოწერილი. ფიდის გამოსაწერად გამომიგზავნეთ ბმული!",
+        "your_subscriptions": "თქვენი გამოწერილები",
+        "unsubscribe_prompt": "გაგზავნე ბმული ხელახლა ფიდიდან გამოწერის გასაუქმებლად.",
+        "setting_enabled": "ჩართული",
+        "setting_disabled": "გამორთული",
     },
 }
